@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		882F05932B72C43D00389CFB /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 882F05922B72C43D00389CFB /* Swinject */; };
 		882F05952B72C43D00389CFB /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 882F05942B72C43D00389CFB /* Swinject-Dynamic */; };
+		882F05972B72C4EF00389CFB /* EndpointPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882F05962B72C4EF00389CFB /* EndpointPath.swift */; };
 		887AF8032AEF5FE30065EA3A /* SwiftUIToyboxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887AF8022AEF5FE30065EA3A /* SwiftUIToyboxApp.swift */; };
 		887AF8052AEF5FE30065EA3A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887AF8042AEF5FE30065EA3A /* ContentView.swift */; };
 		887AF8072AEF5FE40065EA3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 887AF8062AEF5FE40065EA3A /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		882F05962B72C4EF00389CFB /* EndpointPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointPath.swift; sourceTree = "<group>"; };
 		887AF7FF2AEF5FE30065EA3A /* SwiftUIToybox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIToybox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		887AF8022AEF5FE30065EA3A /* SwiftUIToyboxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIToyboxApp.swift; sourceTree = "<group>"; };
 		887AF8042AEF5FE30065EA3A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 		882F058E2B72C0C500389CFB /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				882F05962B72C4EF00389CFB /* EndpointPath.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				887AF8052AEF5FE30065EA3A /* ContentView.swift in Sources */,
+				882F05972B72C4EF00389CFB /* EndpointPath.swift in Sources */,
 				887AF8032AEF5FE30065EA3A /* SwiftUIToyboxApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
