@@ -71,11 +71,11 @@
 		887AF7F62AEF5FE30065EA3A = {
 			isa = PBXGroup;
 			children = (
-				882F059C2B72EF2100389CFB /* Domain */,
-				882F059B2B72EE0500389CFB /* Data */,
 				887AF8012AEF5FE30065EA3A /* Toybox */,
 				887AF8002AEF5FE30065EA3A /* Products */,
 				882F059D2B72EFAE00389CFB /* Frameworks */,
+				882F059C2B72EF2100389CFB /* Domain */,
+				882F059B2B72EE0500389CFB /* Data */,
 			);
 			sourceTree = "<group>";
 		};
