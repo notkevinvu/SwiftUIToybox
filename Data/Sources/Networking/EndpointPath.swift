@@ -7,28 +7,24 @@
 
 import Foundation
 
-protocol EndpointPath {
+public protocol EndpointPath {
     var method: String { get }
     var scheme: String { get }
     var host: String { get }
     var path: String { get }
     var parameters: [URLQueryItem] { get }
-    var headers: [String: String] { get }
+    var headers: [String: String]? { get }
     /// HTTP body, represented as `[String: Any]` which should be serialized to data before passing
     /// to the `URLRequest`
-    var body: [String: Any] { get }
+    var body: [String: Any]? { get }
 }
 
-extension EndpointPath {
+public extension EndpointPath {
     var scheme: String {
         return "https"
     }
     
     var host: String {
         return "jsonplaceholder.typicode.com"
-    }
-    
-    var body: [String: Any] {
-        return [:]
     }
 }
