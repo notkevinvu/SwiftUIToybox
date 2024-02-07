@@ -11,7 +11,7 @@ import SwiftUI
 struct SwiftUIToyboxApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            PostListView()
         }
     }
 }
