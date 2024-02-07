@@ -7,7 +7,6 @@
 
 import Foundation
 import Swinject
-import Domain
 
 /// A singleton class responsible for injecting all dependencies in the app.
 final class DIContainer {
