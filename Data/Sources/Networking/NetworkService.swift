@@ -19,7 +19,7 @@ public class RestNetworkServiceAdapter: NetworkService {
         self.session = URLSession(configuration: configuration)
     }
     
-    convenience init(endpoint: EndpointPath) {
+    convenience init() {
         self.init(configuration: .default)
     }
     
