@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -185,7 +185,6 @@
 			mainGroup = 887AF7F62AEF5FE30065EA3A;
 			packageReferences = (
 				882F05912B72C43D00389CFB /* XCRemoteSwiftPackageReference "Swinject" */,
-				880C37172B7437E000F78A76 /* XCLocalSwiftPackageReference "Domain" */,
 			);
 			productRefGroup = 887AF8002AEF5FE30065EA3A /* Products */;
 			projectDirPath = "";
@@ -422,13 +421,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		880C37172B7437E000F78A76 /* XCLocalSwiftPackageReference "Domain" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Domain;
-		};
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
 		882F05912B72C43D00389CFB /* XCRemoteSwiftPackageReference "Swinject" */ = {
