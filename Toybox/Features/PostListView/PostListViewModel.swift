@@ -14,7 +14,13 @@ final class PostListViewModel: ObservableObject {
     
     @Published var posts: [Post] = []
     
+    @MainActor
     func fetchPosts() async {
-        postProvider.fetchPosts()
+        do {
+            let posts = try await postProvider.fetchPosts()
+            self.posts = posts
+        } catch {
+            print(error)
+        }
     }
 }
