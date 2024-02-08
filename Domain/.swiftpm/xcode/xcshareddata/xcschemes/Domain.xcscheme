@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Data"
-               BuildableName = "Data"
-               BlueprintName = "Data"
+               BlueprintIdentifier = "Domain"
+               BuildableName = "Domain"
+               BlueprintName = "Domain"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -49,9 +49,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "Data"
-            BuildableName = "Data"
-            BlueprintName = "Data"
+            BlueprintIdentifier = "Domain"
+            BuildableName = "Domain"
+            BlueprintName = "Domain"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

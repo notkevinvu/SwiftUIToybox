@@ -27,4 +27,12 @@ public extension EndpointPath {
     var host: String {
         return "jsonplaceholder.typicode.com"
     }
+    
+    var headers: [String : String]? {
+        return nil
+    }
+    
+    var body: [String : Any]? {
+        return nil
+    }
 }
