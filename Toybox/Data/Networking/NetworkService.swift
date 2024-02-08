@@ -7,24 +7,23 @@
 
 import Foundation
 
-public protocol NetworkService {
+protocol NetworkService {
     var session: URLSession { get }
     func request<T: Decodable>(type: T.Type, endpoint: EndpointPath) async throws -> T
 }
 
-@available(iOS 15.0, *)
-public class RestNetworkServiceAdapter: NetworkService {
-    public var session: URLSession
+final class RestNetworkServiceAdapter: NetworkService {
+    var session: URLSession
     
-    public init(configuration: URLSessionConfiguration) {
+    init(configuration: URLSessionConfiguration) {
         self.session = URLSession(configuration: configuration)
     }
     
-    public convenience init() {
+    convenience init() {
         self.init(configuration: .default)
     }
     
-    public func request<T: Decodable>(type: T.Type, endpoint: EndpointPath) async throws -> T {
+    func request<T: Decodable>(type: T.Type, endpoint: EndpointPath) async throws -> T {
         var components = URLComponents()
         components.scheme = endpoint.scheme
         components.host = endpoint.host

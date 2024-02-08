@@ -9,6 +9,11 @@ import SwiftUI
 
 @main
 struct SwiftUIToyboxApp: App {
+    
+    init() {
+        DIContainer.shared.injectModules()
+    }
+    
     var body: some Scene {
         WindowGroup {
             PostListView()

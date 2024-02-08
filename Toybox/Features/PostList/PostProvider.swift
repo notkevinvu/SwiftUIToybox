@@ -6,22 +6,20 @@
 //
 
 import Foundation
-import Data
 
-public protocol PostProvider {
+protocol PostProvider {
     func fetchPosts() async throws -> [Post]
 }
 
-@available(iOS 15.0, *)
-public class PostProviderImpl: PostProvider {
+final class PostProviderImpl: PostProvider {
     
     let networkService: NetworkService
     
-    public init(networkService: NetworkService = RestNetworkServiceAdapter()) {
+    init(networkService: NetworkService) {
         self.networkService = networkService
     }
     
-    public func fetchPosts() async throws -> [Post] {
+    func fetchPosts() async throws -> [Post] {
         // eventually let us pass parameters through function, but for now
         // we can create the request/path entirely here
         let postEndpoint = PostEndpointPath.getPosts
