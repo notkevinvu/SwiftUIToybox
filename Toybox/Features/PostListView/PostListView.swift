@@ -13,7 +13,11 @@ struct PostListView: View {
     
     var body: some View {
         NavigationStack {
-            Text("Hello, World!")
+            List {
+                ForEach(viewModel.posts) { post in
+                    Text(post.title)
+                }
+            }
         }
         .task {
             await viewModel.fetchPosts()
