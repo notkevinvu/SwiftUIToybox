@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Data
 
 public protocol NetworkService {
     var session: URLSession { get }
