@@ -38,6 +38,9 @@ extension DIContainer {
         container.register(NetworkService.self) { _ in
             return RestNetworkServiceAdapter()
         }
+        // as per swinject documentation, the same instance will be
+        // returned by the container in any successing resolutions
+        .inObjectScope(.container)
     }
     
     // MARK: -- Injecting providers
@@ -46,6 +49,9 @@ extension DIContainer {
         container.register(PostProvider.self) { resolver in
             return PostProviderImpl(networkService: resolver.resolve(NetworkService.self)!)
         }
+        // keep same instance within the container so that we can potentially
+        // re-use the post provider if needed for other services
+        .inObjectScope(.container)
     }
     
     // MARK: -- Injecting view models
@@ -54,5 +60,7 @@ extension DIContainer {
         container.register(PostListViewModel.self) { resolver in
             return PostListViewModel(postProvider: resolver.resolve(PostProvider.self)!)
         }
+        // transient scope results in a new instance when the type is resolved
+        .inObjectScope(.transient)
     }
 }
