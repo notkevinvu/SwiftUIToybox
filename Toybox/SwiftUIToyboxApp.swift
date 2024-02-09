@@ -16,7 +16,7 @@ struct SwiftUIToyboxApp: App {
     
     var body: some Scene {
         WindowGroup {
-            PostListView()
+            PostListView(viewModel: DIContainer.shared.resolve(PostListViewModel.self))
         }
     }
 }
