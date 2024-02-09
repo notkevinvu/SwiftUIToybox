@@ -43,6 +43,14 @@ final class RestNetworkServiceAdapter: NetworkService {
             }
         }
         
+        if let body = endpoint.body {
+            do {
+                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: body)
+            } catch {
+                throw TBError.invalidBodyData
+            }
+        }
+        
         let (data, response) = try await session.data(for: urlRequest)
         
         guard let httpResponse = response as? HTTPURLResponse,

@@ -10,5 +10,6 @@ import Foundation
 enum TBError: Error {
     case invalidRequest
     case invalidResponse
+    case invalidBodyData
     case decodingError
 }
