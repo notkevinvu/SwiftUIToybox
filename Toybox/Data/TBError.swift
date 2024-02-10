@@ -7,8 +7,9 @@
 
 import Foundation
 
-public enum TBError: Error {
+enum TBError: Error {
     case invalidRequest
     case invalidResponse
+    case invalidBodyData
     case decodingError
 }

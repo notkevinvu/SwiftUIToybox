@@ -6,11 +6,14 @@
 //
 
 import Foundation
-import Domain
 
 final class PostListViewModel: ObservableObject {
     
-    let postProvider: PostProvider = PostProviderImpl()
+    let postProvider: PostProvider
+    
+    init(postProvider: PostProvider) {
+        self.postProvider = postProvider
+    }
     
     @Published var posts: [Post] = []
     

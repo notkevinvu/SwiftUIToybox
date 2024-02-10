@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PostListView: View {
     
-    @StateObject var viewModel = PostListViewModel()
+    @StateObject var viewModel: PostListViewModel
     
     var body: some View {
         NavigationStack {
@@ -26,5 +26,5 @@ struct PostListView: View {
 }
 
 #Preview {
-    PostListView()
+    PostListView(viewModel: DIContainer.shared.resolve(PostListViewModel.self))
 }
