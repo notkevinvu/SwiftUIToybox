@@ -40,6 +40,11 @@ struct PostListView: View {
                 EmptyView()
                 
             case .loading:
+                // maybe explore using `.overlay` instead? Might not be
+                // compatible with how we use a state enum though
+                // Pointfree has an interesting way of doing this
+                // for swiftui's state based navigation with enums,
+                // but requires their navigation package/library
                 ProgressView {
                     Text("Loading posts")
                 }
@@ -63,6 +68,18 @@ struct PostListView: View {
                 Text(post.title)
             }
         }
+        /*
+         Refreshable here is a bit buggy due to the `fetchPosts()` method
+         updating the view state multiple times - once to set the state to loading
+         and another to either set it to success/error. Thus, when we trigger
+         `fetchPosts()`, the view gets redrawn almost immediately due to the
+         view model's state binding being updated.
+         */
+//        .refreshable {
+//            Task {
+//                await viewModel.fetchPosts()
+//            }
+//        }
     }
 }
 

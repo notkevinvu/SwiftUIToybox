@@ -12,12 +12,52 @@ final class PostListViewModel: ObservableObject {
     // not sure if we want to keep this as a property here for the view
     // to use or if we want to only allow the view to access these items
     // through the success view state
-//    @Published private(set) var posts: [Post] = []
+    @Published private(set) var posts: [Post] = []
     @Published private(set) var state: ViewState = .initial
     let postProvider: PostProvider
     
     init(postProvider: PostProvider) {
         self.postProvider = postProvider
+    }
+    
+    @MainActor
+    func fetchPosts() async {
+        // prevent multiple fetch requests from executing unless we can fetch posts
+        // i.e. state is .loading
+        guard state.canFetchPosts else {
+            return
+        }
+        updateState(.loading)
+        
+        do {
+            // delay task to show off loading animation
+            try await Task.sleep(for: .seconds(1))
+            let posts = try await postProvider.fetchPosts()
+            updateState(.success(posts: posts))
+        } catch {
+            updateState(.error(error.localizedDescription))
+        }
+    }
+}
+
+// MARK: -- View state
+
+extension PostListViewModel {
+    func updateState(_ state: ViewState) {
+        self.state = state
+        
+        switch state {
+            case .initial:
+                break
+            case .loading:
+                break
+            case .empty:
+                break
+            case .success(let posts):
+                self.posts = posts
+            case .error(_):
+                break
+        }
     }
     
     enum ViewState {
@@ -26,18 +66,32 @@ final class PostListViewModel: ObservableObject {
         case empty
         case success(posts: [Post])
         case error(_ error: String)
-    }
-    
-    @MainActor
-    func fetchPosts() async {
-        state = .loading
-        do {
-            // delay task to show off loading animation
-            try await Task.sleep(for: .seconds(1))
-            let posts = try await postProvider.fetchPosts()
-            state = .success(posts: posts)
-        } catch {
-            state = .error(error.localizedDescription)
+        
+        var shouldShowError: Bool {
+            switch self {
+                case .error:
+                    return true
+                default:
+                    return false
+            }
+        }
+        
+        var errorMessage: String? {
+            switch self {
+                case .error(let error):
+                    return error
+                default:
+                    return nil
+            }
+        }
+        
+        var canFetchPosts: Bool {
+            switch self {
+                case .loading:
+                    return false
+                default:
+                    return true
+            }
         }
     }
 }
