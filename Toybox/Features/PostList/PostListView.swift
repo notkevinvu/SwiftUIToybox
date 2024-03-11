@@ -56,8 +56,11 @@ struct PostListView: View {
                 postListView(posts)
                 
             case .error(let error):
+                /// Refer to `Binding+Extension.swift` for using `errorMessage.presence()` to show alerts/sheets/modals
                 Text("Error loading posts - \(error)")
-                
+                    .alert("An error occurred", isPresented: $viewModel.errorMessage.presence()) {
+                        Button("Ok", role: .cancel) {}
+                    }
         }
     }
     

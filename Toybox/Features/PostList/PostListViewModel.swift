@@ -9,11 +9,15 @@ import Foundation
 
 final class PostListViewModel: ObservableObject {
     
+    // MARK: -- View-associated properties
     // not sure if we want to keep this as a property here for the view
     // to use or if we want to only allow the view to access these items
     // through the success view state
     @Published private(set) var posts: [Post] = []
     @Published private(set) var state: ViewState = .initial
+    /// Refer to `Binding+Extension.swift` for using this to show alerts/sheets/modals
+    @Published var errorMessage: String?
+    
     let postProvider: PostProvider
     
     init(postProvider: PostProvider) {
@@ -55,8 +59,8 @@ extension PostListViewModel {
                 break
             case .success(let posts):
                 self.posts = posts
-            case .error(_):
-                break
+            case .error(let error):
+                self.errorMessage = error
         }
     }
     
