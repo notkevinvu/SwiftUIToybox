@@ -15,6 +15,7 @@
 		887288FE2B7565020098D779 /* EndpointPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887288FC2B7565020098D779 /* EndpointPath.swift */; };
 		887288FF2B7565020098D779 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887288FD2B7565020098D779 /* NetworkService.swift */; };
 		887289012B75650C0098D779 /* TBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887289002B75650C0098D779 /* TBError.swift */; };
+		8875D28D2B9F756C0014CA9C /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8875D28C2B9F756C0014CA9C /* Binding+Extension.swift */; };
 		887AF8032AEF5FE30065EA3A /* SwiftUIToyboxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887AF8022AEF5FE30065EA3A /* SwiftUIToyboxApp.swift */; };
 		887AF8072AEF5FE40065EA3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 887AF8062AEF5FE40065EA3A /* Assets.xcassets */; };
 		887AF80A2AEF5FE40065EA3A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 887AF8092AEF5FE40065EA3A /* Preview Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		887288FC2B7565020098D779 /* EndpointPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointPath.swift; sourceTree = "<group>"; };
 		887288FD2B7565020098D779 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		887289002B75650C0098D779 /* TBError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBError.swift; sourceTree = "<group>"; };
+		8875D28C2B9F756C0014CA9C /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		887AF7FF2AEF5FE30065EA3A /* SwiftUIToybox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIToybox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		887AF8022AEF5FE30065EA3A /* SwiftUIToyboxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIToyboxApp.swift; sourceTree = "<group>"; };
 		887AF8062AEF5FE40065EA3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 		882F05902B72C12800389CFB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				8875D28C2B9F756C0014CA9C /* Binding+Extension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -148,10 +151,10 @@
 		889DC9732B72FE3400EEB7C6 /* PostList */ = {
 			isa = PBXGroup;
 			children = (
-				887288F72B7564C40098D779 /* Post.swift */,
-				887288F62B7564C40098D779 /* PostProvider.swift */,
 				889DC9752B72FE4A00EEB7C6 /* PostListView.swift */,
 				889DC9772B72FE6400EEB7C6 /* PostListViewModel.swift */,
+				887288F62B7564C40098D779 /* PostProvider.swift */,
+				887288F72B7564C40098D779 /* Post.swift */,
 			);
 			path = PostList;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				887288F92B7564C40098D779 /* Post.swift in Sources */,
 				889DC9762B72FE4A00EEB7C6 /* PostListView.swift in Sources */,
 				887AF8032AEF5FE30065EA3A /* SwiftUIToyboxApp.swift in Sources */,
+				8875D28D2B9F756C0014CA9C /* Binding+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
