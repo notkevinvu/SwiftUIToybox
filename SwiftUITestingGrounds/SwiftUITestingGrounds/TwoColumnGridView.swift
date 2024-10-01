@@ -12,24 +12,25 @@ struct TwoColumnGridView: View {
     let columns = [GridItem](repeating: .init(.flexible(minimum: 50)), count: 2)
     
     let data = (1...10).map { "Item \($0)" }
-    let testImages: [Image] = [
-        Image("ez"),
-        Image("clueless"),
-        Image("bedge"),
-        Image("prayge"),
-        Image("madge"),
-        Image("monkaw"),
-        Image("testImage1"),
-        Image("testImage2"),
-        Image("testImage3"),
-        Image("testImage4")
-    ]
     
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns) {
+                
+                ZStack {
+                    Image(systemName: "checkmark.icloud.fill")
+                        .symbolRenderingMode(.palette)
+                        .font(.system(size: 48))
+                        .foregroundStyle(.black)
+                    
+                    Image(systemName: "checkmark.icloud")
+                        .symbolRenderingMode(.palette)
+                        .font(.system(size: 48))
+                        .foregroundStyle(.green)
+                }
+                
                 ForEach(testImages) { image in
-                    image
+                    Image(uiImage: image.resizeImage(newWidth: 300) ?? UIImage())
                         .squareOriginalAspectRatioImage()
                         .overlay {
                             ZStack {
@@ -66,6 +67,10 @@ struct TwoColumnGridView: View {
             .padding()
         }
     }
+}
+
+extension UIImage: @retroactive Identifiable {
+    
 }
 
 #Preview {

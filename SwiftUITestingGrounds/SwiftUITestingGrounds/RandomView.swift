@@ -62,14 +62,3 @@ struct RandomView: View {
     RandomView()
         .environmentObject(RandomViewModel())
 }
-
-extension Image {
-    func squareOriginalAspectRatioImage() -> some View {
-        self
-            .resizable()
-            .scaledToFill()
-            .frame(minWidth: 0, maxWidth: .infinity)
-            .frame(height: 148)
-            .clipShape(.rect(cornerRadius: 8))
-    }
-}

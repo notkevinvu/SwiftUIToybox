@@ -63,8 +63,28 @@ struct PhotoPickerView: View {
     PhotoPickerView()
 }
 
-extension Image: Identifiable {
+extension Image: @retroactive Identifiable {
     public var id: String {
         UUID().uuidString
     }
 }
+
+struct TestEvent: Sendable, Identifiable {
+    let id: UUID
+    let name: String
+    var images: [UIImage] = []
+    
+    init(id: UUID = UUID(), name: String, images: [UIImage]) {
+        self.id = id
+        self.name = name
+        self.images = images
+    }
+    
+    
+}
+
+//extension TestEvent: Transferable {
+//    static var transferRepresentation: some TransferRepresentation {
+//        
+//    }
+//}

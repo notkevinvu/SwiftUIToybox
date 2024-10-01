@@ -14,4 +14,14 @@ final class RandomViewModel: ObservableObject {
     func triggerAlert() {
         showAlert = true
     }
+    
+    func createTestFile() {
+        let docDirectoryUrls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        guard let docDirectoryUrl = docDirectoryUrls.first else {
+            return
+        }
+        
+        let tempUrl = URL(filePath: "TestEvent", relativeTo: docDirectoryUrl)
+        let finalTempUrl = tempUrl.appending(component: "kvte")
+    }
 }

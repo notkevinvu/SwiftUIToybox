@@ -16,6 +16,7 @@ struct SwiftUITestingGroundsApp: App {
                 .environmentObject(RandomViewModel())
                 .environment(Router())
                 .environment(MapViewModel())
+                .environment(ImageCarouselViewModel())
         }
     }
 }

@@ -10,6 +10,8 @@ import SwiftUI
 struct MainView: View {
     
     @Environment(Router.self) var router
+    @Environment(ImageCarouselViewModel.self) var imageCarouselVm
+    @EnvironmentObject var randomVm: RandomViewModel
     let routerDestinations = Router.Destination.allCases
     
     @State var searchText: String = ""
@@ -47,7 +49,6 @@ struct MainView: View {
         @Bindable var router = router
         
         NavigationStack(path: $router.navPath) {
-            
             topButtonSection
             
             List {
@@ -71,6 +72,25 @@ struct MainView: View {
                         shouldShowFormView = true
                     }
                 }
+            }
+        }
+        .overlay {
+            if imageCarouselVm.selectedItem != nil {
+                ImageDetailCarouselView()
+                    .allowsHitTesting(imageCarouselVm.showDetailView)
+            }
+        }
+        
+        .overlayPreferenceValue(HeroKey.self) { value in
+            if let selectedItem = imageCarouselVm.selectedItem,
+               let sAnchor = value[selectedItem.id + "SOURCE"],
+               let dAnchor = value[selectedItem.id + "DEST"]
+            {
+                HeroLayer(
+                    item: selectedItem,
+                    sAnchor: sAnchor,
+                    dAnchor: dAnchor
+                )
             }
         }
         .sheet(isPresented: $shouldShowFormView) {

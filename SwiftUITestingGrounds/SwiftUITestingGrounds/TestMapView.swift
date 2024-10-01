@@ -154,6 +154,7 @@ struct MapSearchCompletionSheetView: View {
                     Button("Cancel") {
                         searchFieldFocused = false
                         mapSearchText = ""
+                        currentSheetDetent = smallDetent
                         // TODO: reset search results as well
                     }
                     .transition(.offset(x: 100))
@@ -178,7 +179,6 @@ struct MapSearchCompletionSheetView: View {
         .padding(.horizontal)
         .padding(.top, 16)
         .interactiveDismissDisabled()
-        .presentationBackground(.regularMaterial)
         .presentationBackgroundInteraction(.enabled)
         .presentationDetents(
             availableDetents,
