@@ -18,7 +18,6 @@ struct UnavailableView: View {
         } description: {
             Text("Press \"Add event\" to get started.")
         }
-
     }
 }
 

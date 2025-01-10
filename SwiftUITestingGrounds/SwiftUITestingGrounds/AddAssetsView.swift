@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddAssetsView: View {
     @State var showProgress: Bool = true
+    @State var showRoomScanActionSheet: Bool = false
     
     var body: some View {
         VStack {
@@ -25,6 +26,11 @@ struct AddAssetsView: View {
             toastType: .error,
             shouldShowProgressView: false
         )
+        .confirmationDialog("Room Scan Type", isPresented: $showRoomScanActionSheet) {
+            Button("Single scan") { }
+            Button("Multi-room") { }
+            Button("Cancel", role: .cancel) {}
+        }
     }
     
     @ViewBuilder
@@ -53,6 +59,13 @@ struct AddAssetsView: View {
                     showProgress = true
                 } label: {
                     Label("Files", systemImage: "doc")
+                }
+                .foregroundStyle(.white)
+                
+                Button {
+                    showRoomScanActionSheet = true
+                } label: {
+                    Label("Room scan", systemImage: "rotate.3d")
                 }
                 .foregroundStyle(.white)
             }

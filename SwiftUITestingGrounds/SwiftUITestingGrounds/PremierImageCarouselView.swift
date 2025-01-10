@@ -197,6 +197,8 @@ struct ImageDetailCarouselView: View {
     
     @ViewBuilder
     func carouselImageView(_ item: TempMediaItem, size: CGSize) -> some View {
+//        PhotoDetailView(image: item.primaryImage)
+//            .frame(width: size.width, height: size.height)
         Image(uiImage: item.primaryImage)
             .resizable()
             .scaledToFit()
@@ -217,6 +219,9 @@ struct ImageDetailCarouselView: View {
                     ForEach(viewModel.items) { item in
                         Image(uiImage: item.thumbnailImage)
                             .squareOriginalAspectRatioImage(dimension: 50)
+                            .onTapGesture {
+                                viewModel.didSelectItemInBottomCarousel(item: item)
+                            }
                     }
                 }
                 .padding(.vertical, 10)
@@ -379,6 +384,13 @@ final class ImageCarouselViewModel {
             withAnimation(.easeInOut(duration: 0.1)) {
                 detailScrollPosition = updatedItem.id
             }
+        }
+    }
+    
+    func didSelectItemInBottomCarousel(item: TempMediaItem) {
+        withAnimation(.easeInOut(duration: 0.1)) {
+            detailIndicatorPosition = item.id
+            detailIndicatorDidChange()
         }
     }
     

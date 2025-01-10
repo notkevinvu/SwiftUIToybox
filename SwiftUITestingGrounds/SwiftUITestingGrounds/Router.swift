@@ -23,25 +23,26 @@ final class Router {
     
     enum Destination: Hashable, Equatable, CaseIterable {
         case initial
-        case videoView
+//        case videoView
         case mapView
-        case photoPickerView
+//        case photoPickerView
         case gridView
         case imageToStringDataTestView
         case tabView
         case thumbnailView
         case carouselView
+        case lanConnectionView
         
         var title: String {
             switch self {
                 case .initial:
                     "Main view"
-                case .videoView:
-                    "Video view"
+//                case .videoView:
+//                    "Video view"
                 case .mapView:
                     "Map view"
-                case .photoPickerView:
-                    "Photo picker view"
+//                case .photoPickerView:
+//                    "Photo picker view"
                 case .gridView:
                     "Grid view"
                 case .imageToStringDataTestView:
@@ -52,6 +53,8 @@ final class Router {
                     "Thumbnail view"
                 case .carouselView:
                     "Carousel view"
+                case .lanConnectionView:
+                    "LAN Connection View"
             }
         }
     }
@@ -84,12 +87,12 @@ final class Router {
         switch destination {
             case .initial:
                 MainView()
-            case .videoView:
-                RandomView()
+//            case .videoView:
+//                RandomView()
             case .mapView:
                 TestMapView()
-            case .photoPickerView:
-                PhotoPickerView()
+//            case .photoPickerView:
+//                PhotoPickerView()
             case .gridView:
                 TwoColumnGridView()
             case .imageToStringDataTestView:
@@ -101,6 +104,8 @@ final class Router {
             case .carouselView:
 //                HorizontalZoomableImageCarouselView()
                 PremierImageCarouselHolderView()
+            case .lanConnectionView:
+                LANConnectionTestView()
         }
     }
 }
