@@ -20,9 +20,6 @@ import SwiftUI
 /// - **Map**: Map view with search functionality
 struct AppTabView: View {
     @Environment(AppRouter.self) private var appRouter
-    @Environment(MainRouter.self) private var mainRouter
-    @Environment(ImageCarouselViewModel.self) private var imageCarouselVm
-    @EnvironmentObject private var randomVm: RandomViewModel
 
     var body: some View {
         TabView(selection: appRouter.selectedTabBinding) {

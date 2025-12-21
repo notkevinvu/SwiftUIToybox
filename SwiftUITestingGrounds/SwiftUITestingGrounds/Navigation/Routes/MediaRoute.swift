@@ -11,8 +11,16 @@ import SwiftUI
 ///
 /// Currently used for sheet-based video player presentation.
 /// Extensible for future media navigation flows.
-enum MediaRoute: Routable {
+enum MediaRoute: Routable, CaseIterable {
     case videoPlayer
+
+    /// Display title for this route.
+    var title: String {
+        switch self {
+        case .videoPlayer:
+            "Video Player"
+        }
+    }
 
     @ViewBuilder
     var body: some View {

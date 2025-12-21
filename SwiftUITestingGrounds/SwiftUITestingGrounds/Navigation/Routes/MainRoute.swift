@@ -38,14 +38,19 @@ enum MainRoute: Routable, CaseIterable {
         switch self {
         case .gridView:
             TwoColumnGridView()
+                .navigationTitle(title)
         case .imageToStringData:
             ImageToStringDataTestView()
+                .navigationTitle(title)
         case .thumbnailView:
             ThumbnailView()
+                .navigationTitle(title)
         case .carouselView:
             PremierImageCarouselHolderView()
+                .navigationTitle(title)
         case .lanConnection:
             LANConnectionTestView()
+                .navigationTitle(title)
         }
     }
 }
