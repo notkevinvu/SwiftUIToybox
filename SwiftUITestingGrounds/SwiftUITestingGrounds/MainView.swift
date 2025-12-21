@@ -8,98 +8,69 @@
 import SwiftUI
 
 struct MainView: View {
-    
-    @Environment(Router.self) var router
-    @Environment(ImageCarouselViewModel.self) var imageCarouselVm
+
     @EnvironmentObject var randomVm: RandomViewModel
-    let routerDestinations = Router.Destination.allCases
-    
+
     @State var searchText: String = ""
     @State var shouldShowFormView: Bool = false
     @Environment(\.isSearching) var isSearching
-    
+
     @State var listViewType: ListViewType = .list
     enum ListViewType: CaseIterable {
         case list
         case map
-        
+
         var display: String {
             switch self {
-                case .list:
-                    "List"
-                case .map:
-                    "Map"
+            case .list:
+                "List"
+            case .map:
+                "Map"
             }
         }
     }
-    
+
     init() {
         UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(.blue)
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.white)], for: .normal)
     }
-    
+
     var body: some View {
-        navStackBaseView
+        mainContent
     }
-    
+
     @State var shouldShowProgressCell: Bool = false
-    
+
     @ViewBuilder
-    var navStackBaseView: some View {
-        @Bindable var router = router
-        
-        NavigationStack(path: $router.navPath) {
+    var mainContent: some View {
+        VStack(spacing: 0) {
             topButtonSection
-            
+
             List {
                 if shouldShowProgressCell {
                     ProgressView("Loading something...")
                 }
-                
-                ForEach(routerDestinations, id: \.self) { destination in
-                    NavigationLink(destination.title, value: destination)
+
+                ForEach(MainRoute.allCases, id: \.self) { route in
+                    NavigationLink(route.title, value: route)
                 }
             }
             .searchDictationBehavior(.automatic)
-            
-            .navigationDestination(for: Router.Destination.self) { destination in
-                router.determineView(for: destination)
-                    .navigationTitle(destination.title)
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Show forms") {
-                        shouldShowFormView = true
-                    }
+        }
+        .navigationTitle("Main")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Show forms") {
+                    shouldShowFormView = true
                 }
-            }
-        }
-        .overlay {
-            if imageCarouselVm.selectedItem != nil {
-                ImageDetailCarouselView()
-                    .allowsHitTesting(imageCarouselVm.showDetailView)
-            }
-        }
-        
-        .overlayPreferenceValue(HeroKey.self) { value in
-            if let selectedItem = imageCarouselVm.selectedItem,
-               let sAnchor = value[selectedItem.id + "SOURCE"],
-               let dAnchor = value[selectedItem.id + "DEST"]
-            {
-                HeroLayer(
-                    item: selectedItem,
-                    sAnchor: sAnchor,
-                    dAnchor: dAnchor
-                )
             }
         }
         .sheet(isPresented: $shouldShowFormView) {
             FormView()
         }
         .searchable(text: $searchText)
-        
     }
-    
+
     @ViewBuilder
     var topButtonSection: some View {
         HStack(alignment: .center) {
@@ -112,7 +83,7 @@ struct MainView: View {
             }
             .pickerStyle(.segmented)
             .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             Button {
                 shouldShowProgressCell.toggle()
             } label: {
@@ -122,7 +93,7 @@ struct MainView: View {
                         .lineLimit(1)
                 }
                 .minimumScaleFactor(0.5)
-                
+
             }
             .minimumScaleFactor(0.5)
             .buttonStyle(.borderedProminent)
@@ -139,86 +110,16 @@ struct MainView: View {
 
 let buttonBackgroundColor: Color = Color(red: 69/255, green: 171/255, blue: 255/255, opacity: 1)
 
-// MARK: -- Tab
-struct TestTabView: View {
-    
-    @Environment(Router.self) var router
-    
-    @State var tabBarOffset: CGFloat = 0
-    
-    var body: some View {
-        tabView
-    }
-    
-    @ViewBuilder
-    var tabView: some View {
-        @Bindable var router = router
-        
-        TabView(selection: $router.selectedTab) {
-            Group {
-                MainView()
-                    .tabItem {
-                        Label("Main", systemImage: "person")
-                    }
-                    .tag(Router.TabDestination.main)
-                    .toolbarBackground(.clear, for: .bottomBar)
-                
-                TestMapView()
-                    .tabItem {
-                        Label("Map", systemImage: "map")
-                    }
-                    .tag(Router.TabDestination.map)
-                    .toolbarBackground(.clear, for: .bottomBar)
-                
-                PhotoPickerView()
-                    .tabItem {
-                        Label("Photos", systemImage: "photo")
-                    }
-                    .tag(Router.TabDestination.photoPicker)
-                    .toolbarBackground(.clear, for: .bottomBar)
-                
-                ProgressView("Showing videos...")
-                    .tabItem {
-                        Label("Videos", systemImage: "video")
-                    }
-                    .tag(Router.TabDestination.videos)
-                    .toolbarBackground(.clear, for: .bottomBar)
-            }
-            .toolbar {
-                ToolbarItem(placement: .bottomBar) {
-                    Button {
-                        print("bottom button")
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 44))
-                            .foregroundStyle(.white, .blue)
-                    }
-                }
-            }
-            
-        }
-        .onChange(of: router.selectedTab) { oldValue, newValue in
-            switch newValue {
-                case .videos:
-                    router.selectedTab = oldValue
-                    router.videoTabPresented = true
-                default: return
-            }
-        }
-        .sheet(isPresented: $router.videoTabPresented) {
-            RandomView()
-        }
-        
-    }
-}
-
 #Preview {
-    MainView()
-//    TestTabView()
-        .environmentObject(RandomViewModel())
-        .environment(Router())
-        .environment(MapViewModel())
-        .preferredColorScheme(.dark)
+    NavigationStack {
+        MainView()
+            .routableDestination(for: MainRoute.self)
+    }
+    .environmentObject(RandomViewModel())
+    .environment(MainRouter())
+    .environment(MapViewModel())
+    .environment(ImageCarouselViewModel())
+    .preferredColorScheme(.dark)
 }
 
 extension UISegmentedControl {
