@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/Users/kivenchy/Developer/claude-workflow-kit/install.sh)",
+      "Bash(cat:*)",
+      "WebSearch",
+      "Skill(commit-commands:commit)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  },
+  "outputStyle": "Explanatory"
+}
