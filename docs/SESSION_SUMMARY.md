@@ -2,22 +2,31 @@
 
 ## Recently Completed
 
-1. **Modular Navigation System - Phase 1** - Implemented core navigation infrastructure including `Routable` protocol, `AnyRoute` type-erased wrapper, `AppRouter` coordinator with tab/modal management, `FeatureRouting` protocol, and `View+Navigation` extensions for declarative bindings
+1. **Modular Navigation System - Phase 2** - Integrated navigation infrastructure with the app:
+   - Created `MainRoute` and `MediaRoute` enums for type-safe routing
+   - Added `MainRouter` implementing `FeatureRouting` for main tab navigation
+   - Built `AppTabView` as root container with 4 tabs
+   - Migrated MainView to pure content view pattern
+   - Videos tab presents sheet via route-based modal
+   - Hero animation overlay correctly scoped to MainTabContent
 
-2. **Claude Workflow Kit Integration** - Added project-level Claude configuration with custom slash commands (`/sync-main`, `/full-pr-review`, `/update-session`) and comprehensive CLAUDE.md documentation
+2. **Modular Navigation System - Phase 1** - Core navigation infrastructure:
+   - `Routable` protocol, `AnyRoute` type-erased wrapper
+   - `AppRouter` coordinator with tab/modal management
+   - `FeatureRouting` protocol, `View+Navigation` extensions
 
-3. **PR Review Workflow** - Completed full PR review cycle for Phase 1 navigation with automated code review, issue fixes, and documentation updates
+3. **Claude Workflow Kit Integration** - Custom slash commands and CLAUDE.md documentation
 
 ## Current State
 
 ### Navigation System (SwiftUITestingGrounds)
-- **Phase 1 Complete**: Core protocols and infrastructure merged to main
-  - `Routable` protocol for type-safe route definitions
-  - `AnyRoute` type-erased wrapper for heterogeneous collections
-  - `AppRouter` central coordinator (tabs, modals, global path)
-  - `FeatureRouting` protocol for feature-level routers
-  - `View+Navigation` extensions for binding-based navigation
-- **Not Yet Integrated**: Navigation system exists but not yet used by actual feature views
+- **Phase 2 Complete**: Full integration with app
+  - `MainRoute` (5 cases) for main tab destinations
+  - `MediaRoute` (1 case) for video player sheet
+  - `MainRouter` feature router for main tab
+  - `AppTabView` root container replacing legacy TestTabView
+  - Legacy `Router.swift` removed
+- **Architecture**: AppRouter (global) → MainRouter (feature) → Routes (views)
 
 ### SwiftUIToyBox
 - Clean architecture with Swinject DI
@@ -25,23 +34,22 @@
 - ViewState enum-based state machine in ViewModels
 
 ### SwiftUITestingGrounds
-- Hero animations with PreferenceKey pattern
-- Custom view modifiers (Toast, etc.)
-- Router-based NavigationStack management (older pattern, to be replaced)
+- Hero animations with PreferenceKey pattern (preserved in MainTabContent)
+- Modular navigation system fully integrated
+- 4 tabs: Main, Photos, Videos (sheet), Map
 
 ## Next Steps
 
-### Navigation Phase 2: Feature Integration
-1. **Create concrete route enums** for existing features (MainRoute, MediaRoute, MapRoute)
-2. **Integrate AppRouter** with the app entry point and TabView
-3. **Migrate existing views** to use the new navigation system
-4. **Add feature-specific child routers** implementing FeatureRouting protocol
-
 ### Navigation Phase 3: Advanced Features
-1. Deep linking support
+1. Deep linking support (make routes Codable)
 2. State restoration / persistence
 3. Navigation analytics/logging
 4. Unit tests for navigation logic
+
+### Feature Expansion
+- Add MediaRouter when photo gallery needs internal navigation
+- Add MapRouter when map needs location detail views
+- Consider extracting routes to separate Swift packages
 
 ### Other Improvements
 - Consolidate patterns between both projects
