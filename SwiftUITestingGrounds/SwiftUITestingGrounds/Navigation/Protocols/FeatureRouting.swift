@@ -12,30 +12,30 @@ import SwiftUI
 /// Each feature module can have its own router conforming to `FeatureRouting`,
 /// enabling modular navigation management while maintaining a consistent API.
 ///
+/// Conforming types should be marked with `@Observable` for SwiftUI integration.
+///
 /// Example:
 /// ```swift
 /// @Observable
 /// final class MediaRouter: FeatureRouting {
-///     typealias Route = MediaRoute
-///
 ///     var path: [MediaRoute] = []
-///
-///     func navigate(to route: MediaRoute) {
-///         path.append(route)
-///     }
+///     // Default implementations from protocol extension handle navigation
 /// }
 /// ```
-protocol FeatureRouting: AnyObject, Observable {
+protocol FeatureRouting: AnyObject {
     associatedtype Route: Routable
 
     /// The navigation path for this feature's routes.
+    /// Use `navigate(to:)`, `pop()`, and `popToRoot()` to modify.
     var path: [Route] { get set }
 
     /// Navigate to a specific route by pushing it onto the path.
     func navigate(to route: Route)
 
     /// Pop the most recent route from the path.
-    func pop()
+    /// - Returns: `true` if a route was popped, `false` if path was already empty.
+    @discardableResult
+    func pop() -> Bool
 
     /// Pop all routes, returning to the root of this feature.
     func popToRoot()
@@ -48,9 +48,16 @@ extension FeatureRouting {
         path.append(route)
     }
 
-    func pop() {
-        guard !path.isEmpty else { return }
+    @discardableResult
+    func pop() -> Bool {
+        guard !path.isEmpty else {
+            #if DEBUG
+            print("[FeatureRouting] Warning: Attempted to pop from empty path")
+            #endif
+            return false
+        }
         path.removeLast()
+        return true
     }
 
     func popToRoot() {

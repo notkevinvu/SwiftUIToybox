@@ -13,12 +13,21 @@ import SwiftUI
 /// different feature modules in a single path. `AnyRoute` wraps any `Routable`
 /// while preserving both hashability and the ability to build views.
 ///
-/// Example:
+/// Example (manual wrapping):
 /// ```swift
 /// let mediaRoute = MediaRoute.gallery
 /// let anyRoute = AnyRoute(mediaRoute)
 /// globalPath.append(anyRoute)
 /// ```
+///
+/// Prefer using the `erased` property for cleaner syntax:
+/// ```swift
+/// globalPath.append(MediaRoute.gallery.erased)
+/// ```
+///
+/// - Important: Routes should be value types (enums) to avoid retain cycles.
+///   If a route has associated values containing reference types, mutations
+///   to those references will affect the view but not equality/hashing.
 struct AnyRoute: Hashable, Identifiable {
     /// The underlying route's hash value for equality comparison.
     private let base: AnyHashable
@@ -29,11 +38,22 @@ struct AnyRoute: Hashable, Identifiable {
     /// The route's identifier.
     let id: String
 
+    #if DEBUG
+    /// The original route type name (for debugging).
+    let typeName: String
+    #endif
+
     /// Creates a type-erased route from any `Routable` value.
+    ///
+    /// - Parameter route: The route to wrap. Should be a value type to avoid
+    ///   retain cycles in the view-building closure.
     init<R: Routable>(_ route: R) {
         self.base = AnyHashable(route)
         self.id = route.id
         self._body = { AnyView(route.body) }
+        #if DEBUG
+        self.typeName = String(describing: R.self)
+        #endif
     }
 
     /// The view to display for this route.
@@ -57,7 +77,23 @@ struct AnyRoute: Hashable, Identifiable {
 
 extension Routable {
     /// Wraps this route in a type-erased `AnyRoute`.
+    ///
+    /// This is the preferred way to convert a route for use with `AppRouter`:
+    /// ```swift
+    /// router.navigate(to: MediaRoute.gallery)
+    /// // Internally uses: MediaRoute.gallery.erased
+    /// ```
     var erased: AnyRoute {
         AnyRoute(self)
     }
 }
+
+// MARK: - Debug Helpers
+
+#if DEBUG
+extension AnyRoute: CustomDebugStringConvertible {
+    var debugDescription: String {
+        "AnyRoute<\(typeName)>(id: \(id))"
+    }
+}
+#endif

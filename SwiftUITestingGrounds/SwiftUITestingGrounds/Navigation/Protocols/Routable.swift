@@ -13,6 +13,9 @@ import SwiftUI
 /// enabling type-safe, decentralized route definitions while maintaining
 /// a unified navigation system.
 ///
+/// Routes should typically be enums (value types) to avoid retain cycles
+/// when wrapped in `AnyRoute`.
+///
 /// Example:
 /// ```swift
 /// enum MediaRoute: Routable {
@@ -30,6 +33,8 @@ import SwiftUI
 ///     }
 /// }
 /// ```
+///
+/// - Note: Associated values in route cases must conform to `Hashable`.
 protocol Routable: Hashable, Identifiable {
     associatedtype Body: View
 
@@ -41,7 +46,15 @@ protocol Routable: Hashable, Identifiable {
 
 extension Routable {
     /// Default identifier based on the route's string representation.
-    /// Override this for routes with associated values that need stable IDs.
+    ///
+    /// This produces unique IDs for routes with different associated values,
+    /// e.g., `detail(item: Item(id: 1))` and `detail(item: Item(id: 2))`
+    /// will have different IDs.
+    ///
+    /// - Warning: This default may produce unstable identifiers for routes
+    ///   with reference-type associated values. Override if you need:
+    ///   - Stable IDs across app launches (for state restoration)
+    ///   - A simpler ID scheme (e.g., just the case name)
     var id: String {
         String(describing: self)
     }

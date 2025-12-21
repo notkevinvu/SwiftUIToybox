@@ -12,14 +12,19 @@ import SwiftUI
 extension View {
     /// Adds a navigation destination handler for a specific `Routable` type.
     ///
-    /// Use this to register feature routes with a `NavigationStack`:
+    /// Use this with **feature-specific routers** that store concrete route types
+    /// in typed arrays (`[MediaRoute]`), NOT with `AppRouter.globalPath`.
+    ///
+    /// Example with a feature router:
     /// ```swift
-    /// NavigationStack(path: $router.globalPath) {
-    ///     ContentView()
+    /// NavigationStack(path: $mediaRouter.path) {
+    ///     MediaHomeView()
     ///         .routableDestination(for: MediaRoute.self)
-    ///         .routableDestination(for: MapRoute.self)
     /// }
     /// ```
+    ///
+    /// - Important: For `AppRouter.globalPath` which stores type-erased `AnyRoute`,
+    ///   use `anyRoutableDestination()` instead.
     func routableDestination<R: Routable>(for routeType: R.Type) -> some View {
         self.navigationDestination(for: R.self) { route in
             route.body
@@ -28,13 +33,16 @@ extension View {
 
     /// Adds a navigation destination handler for type-erased `AnyRoute`.
     ///
-    /// Use this as a fallback for routes that have been type-erased:
+    /// Use this with `AppRouter.globalPath` which stores type-erased routes:
     /// ```swift
-    /// NavigationStack(path: $router.globalPath) {
+    /// NavigationStack(path: router.globalPathBinding) {
     ///     ContentView()
     ///         .anyRoutableDestination()
     /// }
     /// ```
+    ///
+    /// This is required because `AppRouter.navigate(to:)` wraps routes in `AnyRoute`,
+    /// so the NavigationStack needs to handle `AnyRoute` types.
     func anyRoutableDestination() -> some View {
         self.navigationDestination(for: AnyRoute.self) { route in
             route.body
@@ -47,10 +55,10 @@ extension View {
 extension View {
     /// Presents a sheet for an optional `AnyRoute`.
     ///
-    /// Binds to the router's `activeSheet` property:
+    /// Use with the router's binding properties:
     /// ```swift
     /// ContentView()
-    ///     .sheet(route: $router.activeSheet)
+    ///     .sheet(route: router.activeSheetBinding)
     /// ```
     func sheet(route: Binding<AnyRoute?>) -> some View {
         self.sheet(item: route) { anyRoute in
@@ -60,10 +68,10 @@ extension View {
 
     /// Presents a full-screen cover for an optional `AnyRoute`.
     ///
-    /// Binds to the router's `activeFullScreen` property:
+    /// Use with the router's binding properties:
     /// ```swift
     /// ContentView()
-    ///     .fullScreenCover(route: $router.activeFullScreen)
+    ///     .fullScreenCover(route: router.activeFullScreenBinding)
     /// ```
     func fullScreenCover(route: Binding<AnyRoute?>) -> some View {
         self.fullScreenCover(item: route) { anyRoute in
@@ -75,19 +83,23 @@ extension View {
 // MARK: - Router Environment Helpers
 
 extension View {
-    /// Convenience modifier to attach both navigation destinations and modal handlers.
+    /// Convenience modifier to attach modal handlers to a view.
     ///
-    /// Use this at the root of your navigation stack:
+    /// Use this at the root of your navigation stack to enable sheet
+    /// and full-screen cover presentations via `AppRouter`:
     /// ```swift
-    /// NavigationStack(path: $router.globalPath) {
+    /// NavigationStack(path: router.globalPathBinding) {
     ///     ContentView()
+    ///         .anyRoutableDestination()
     /// }
     /// .withAppRouterModals(router: router)
     /// ```
+    ///
+    /// This uses the router's binding properties to connect to the
+    /// `activeSheet` and `activeFullScreen` state.
     func withAppRouterModals(router: AppRouter) -> some View {
-        @Bindable var router = router
-        return self
-            .sheet(route: $router.activeSheet)
-            .fullScreenCover(route: $router.activeFullScreen)
+        self
+            .sheet(route: router.activeSheetBinding)
+            .fullScreenCover(route: router.activeFullScreenBinding)
     }
 }
