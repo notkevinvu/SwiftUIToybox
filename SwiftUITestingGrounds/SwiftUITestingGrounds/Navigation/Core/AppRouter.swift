@@ -33,13 +33,15 @@ final class AppRouter {
     /// Available tabs in the application.
     enum Tab: Hashable, CaseIterable {
         case main
-        case media
+        case photoPicker
+        case videos
         case map
 
         var title: String {
             switch self {
             case .main: "Main"
-            case .media: "Media"
+            case .photoPicker: "Photos"
+            case .videos: "Videos"
             case .map: "Map"
             }
         }
@@ -47,7 +49,8 @@ final class AppRouter {
         var icon: String {
             switch self {
             case .main: "house.fill"
-            case .media: "photo.stack.fill"
+            case .photoPicker: "photo.stack.fill"
+            case .videos: "video.fill"
             case .map: "map.fill"
             }
         }
