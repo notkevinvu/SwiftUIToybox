@@ -9,12 +9,21 @@ import SwiftUI
 
 @main
 struct SwiftUITestingGroundsApp: App {
+    // MARK: - Navigation (New modular system)
+    @State private var appRouter = AppRouter()
+
+    // MARK: - Legacy Router (kept during migration)
+    @State private var legacyRouter = Router()
+
     var body: some Scene {
         WindowGroup {
             MainView()
 //            TransitionView()
                 .environmentObject(RandomViewModel())
-                .environment(Router())
+                // New modular navigation system
+                .environment(appRouter)
+                // Legacy router (remove after full migration)
+                .environment(legacyRouter)
                 .environment(MapViewModel())
                 .environment(ImageCarouselViewModel())
         }
